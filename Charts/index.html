@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotSOS Reports Metrics</title>
+
+    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <script src="selectCustom.js"></script>
+    
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Here a loader is created which
+            loads till response comes -->
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status" id="loading">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    
+    <div class="main-header">
+        <h1>HotSOS Tickets Metrics Dashboard <span id="day-filtered"> </span><span id="month-filtered"><span id="week-filtered"></span> <span id="year-filtered"> </h1>
+    </div>
+
+    <div id="areaFilter">
+        <div class="week-filter" onchange="getFilter()">
+            <span>Departamento. </span>
+            <select id="area-select">
+                <option value="" selected></option>
+                <option value="IT - Sistemas">IT - Sistemas</option>
+                <option value="Guest Service">Guest Service</option>
+                <option value="AyB">A y B</option>
+                <option value="Runner">Runner</option>
+                <option value="Mantenimiento">Mantenimiento</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="main-container">
+        <div class='dateFilter'>
+            <div class="year-filter">
+                <span>Año</span>
+                <select id="year-select" onchange="getFilter()">
+                    <option value=""></option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                </select>
+            </div>
+            <div class="month-filter">
+                <span>Mes</span>
+                <select id="month-select" onchange="getFilter()">
+                    <option value=""></option>
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+            </div>
+            <div class="day-filter">
+                <span>Día</span>
+                <select id="day-select" onchange="getFilter()">
+                    <option value=""></option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                </select>
+            </div>
+        </div>
+        <div class="dateFilter">
+            <div class="week-filter" onchange="getFilter()">
+                <span>Sem. </span>
+                <select id="week-select">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                    <option value="47">47</option>
+                    <option value="48">48</option>
+                    <option value="49">49</option>
+                    <option value="50">50</option>
+                    <option value="51">51</option>
+                    <option value="52">52</option>
+                    <option value="53">53</option>
+                </select>
+            </div>
+        </div>
+        
+    
+        <!-- ===========================================LARGE CHARTS ================================================= -->
+        <div id="summary-year">
+            <div class="main-header">
+                <p>Resumen</p>
+            </div>
+            
+            <div class="grid-large">
+                <div class="grid-element-lg" id="year-chart">
+                    <div class="header">
+                        <h1>Tickets Anuales : <span class="total-anual"></span></h1>
+                    </div>            
+                    <div class="table-lg">
+                        <table id="yearly"></table>
+                    </div>
+                    <canvas id="chart-yearly"></canvas>
+                    <div class="chart-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div id="summary-month">
+            <div class="grid-element-lg" id="month-chart">
+                <div class="header">
+                    <h1>Tickets Mensuales : <span class="total-mensual"></span></h1>
+                </div>            
+                <div class="table-lg">
+                    <table id="monthly"></table>
+                </div>
+                <canvas id="chart-monthly"></canvas>
+                <div class="chart-lg">
+                </div>
+            </div>
+        </div>
+    
+        <div id="summary-week">
+            <div class="grid-large">
+                <div class="grid-element-lg" id="week-chart">
+                    <div class="header">
+                        <h1>Tickets Semanales : <span class="total-semanal"></span></h1>
+                    </div>            
+                    <div class="table-lg">
+                        <table id="weekly"></table>
+                    </div>
+                    <canvas id="chart-weekly"></canvas>
+                    <div class="chart-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div id="summary-day">
+            <div class="grid-element-lg" id="day-chart">
+                <div class="header">
+                    <h1>Tickets Diarios : <span class="total-diario"></span></h1>
+                </div>            
+            </div>
+        </div>
+    
+        <div class="grid-main" id="main-info">
+            <div class="grid-element">
+                <div class="header">
+                    <h1>Tipo </h1>
+                </div>
+                <div class="figures">
+                    <div class="chart">
+                        <canvas id="chart-type"></canvas>
+                    </div>
+                    <div class="table">
+                        <table id="types"></table>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="grid-element">
+                <div class="header">
+                    <h1>Problema </h1>
+                </div>
+                <div class="figures">
+                    <div class="chart">
+                        <canvas id="chart-issue"></canvas>
+                    </div>
+                    <div class="table">
+                        <table id="issues"></table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid-element">
+                <div class="header">
+                    <h1>Prioridad</h1>
+                </div>            
+                <div class="figures">
+                    <div class="chart">
+                        <canvas id="chart-priority"></canvas>
+                    </div>
+                    <div class="table">
+                        <table id="priorities"></table>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="grid-element">
+                <div class="header">
+                    <h1>Asignado de TI</h1>
+                </div>
+                <div class="figures">
+                    <div class="chart">
+                        <canvas id="chart-assigned"></canvas>
+                    </div>
+                    <div class="table">
+                        <table id="assigned"></table>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="grid-element">
+                <div class="header">
+                    <h1>Casa</h1>
+                </div>            
+                <div class="figures">
+                    <div class="chart">
+                        <canvas id="chart-house"></canvas>
+                    </div>
+                    <div class="table">
+                        <table id="house"></table>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="grid-element">
+                <div class="header">
+                    <h1>Huésped</h1>
+                </div>
+                <div class="figures">
+                    <div class="chart">
+                        <canvas id="chart-guest"></canvas>
+                    </div>
+                    <div class="table">
+                        <table id="guest"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="footer" id="footer">Ya contratenme, porfa <strong>Todos los derechos reservados</strong> ©.</div>
+
+</body>
+<script>
+
+    // api url
+    const URL ="http://localhost:4000/api/";
+
+    let areaFilter = document.getElementById("area-select").value;
+    
+    if (areaFilter == '') {
+        document.getElementById('main-container').hidden = true
+        document.getElementById('footer').hidden = true
+
+    } else {
+        document.getElementById('main-container').hidden = false
+        document.getElementById('footer').hidden = false
+
+    }
+
+    filtering(url = 'http://localhost:4000/api/',null,null,null,null,null)
+
+    // CHARTS
+    const chartTypes = document.getElementById('chart-type');
+    const chartIssues = document.getElementById('chart-issue');
+    const chartPriority = document.getElementById('chart-priority');
+    const chartAssigned = document.getElementById('chart-assigned');
+    const chartRoom = document.getElementById('chart-room');
+    const chartHouse = document.getElementById('chart-house');
+    const chartGuest = document.getElementById('chart-guest');
+    const chartYearly = document.getElementById('chart-yearly');
+    const chartMonthly = document.getElementById('chart-monthly');
+    const chartWeekly = document.getElementById('chart-weekly');
+
+    
+    let typeChart;
+    let issueChart;
+    let priorityChart;
+    let assignedChart;
+    let houseChart;
+    let guestChart;
+    let yearlyChart;
+    let monthlyChart;
+    let weeklyChart;
+
+
+    //API, YEAR, MONTH, DAY, WEEK, AREA
+    function filtering(api, y, m, d, w, area){
+        getByType(api, y, m, d, w, area);
+        getByIssue(api, y, m, d, w, area);
+        getByPriority(api, y, m, d, w, area);
+        getByAssigned(api, y, m, d, w, area);
+        getByGuest(api, y, m, d, w, area);
+        getByHouse(api, y, m, d, w, area);
+        getByYear(api, y, m, d, w, area);
+        getByMonth(api, y, m, d, w, area);
+        getByWeek(api, y, m, d, w, area);
+    }
+
+    // Defining async function
+    async function getByType(url,year,month,day,week,area) {
+        // Storing response
+        const response = await fetch(url+'types/count');
+        // Storing data in form of JSON
+        var data = await response.json();
+        if (response) {
+            hideloader();
+        }
+        showType(data,year,month,day,week,area);
+    }
+
+    async function getByIssue(url,year,month,day,week,area) {
+        // Storing response
+        const response = await fetch(url+'issues/count');
+        var data = await response.json();
+        if (response) {
+            hideloader();
+        }
+        showIssue(data,year,month,day,week,area);
+    }
+
+    async function getByPriority(url,year,month,day,week,area) {
+        const response = await fetch(url+'priorities/count');
+        var data = await response.json();
+        if (response) {
+            hideloader();
+        }
+        showPriority(data,year,month,day,week,area);
+    }
+
+    async function getByAssigned(url,year,month,day,week,area) {
+        const response = await fetch(url+'assigned/count');
+        var data = await response.json();
+        if (response) {
+            hideloader();
+        }
+        showAssigned(data,year,month,day,week,area);
+    }
+
+    async function getByGuest(url,year,month,day,week,area) {
+        const response = await fetch(url+'guests/count');
+        var data = await response.json();
+        if (response) {
+            hideloader();
+        }
+        showGuest(data,year,month,day,week,area);
+    }
+
+    async function getByHouse(url,year,month,day,week,area) {
+        const response = await fetch(url+'house/count');
+        var data = await response.json();
+        if (response) {
+            hideloader();
+        }
+        showHouse(data,year,month,day,week,area);
+    }
+
+    async function getByYear(url,year,month,day,week,area) {
+        const response = await fetch(url+'year/count');
+
+        var data = await response.json();
+        if (response) {
+            hideloader();
+        }
+        showYearly(data,year,area);
+    }
+
+    async function getByMonth(url,year,month,day,week,area) {
+        const response = await fetch(url+'month/count');
+        var data = await response.json();
+        if (response) {
+            hideloader();
+        }
+        showMonthly(data,year,month,area);
+    }
+
+    async function getByWeek(url,year,month,day,week,area) {
+        const response = await fetch(url+'week/count');
+        var data = await response.json();
+        if (response) {
+            hideloader();
+        }
+        showWeekly(data,year,week,area);
+    }
+
+//======================================================FILTER===========================================================
+
+    function getFilter(){
+        let yFilter = document.getElementById("year-select").value;
+        let mFilter = document.getElementById("month-select").value;
+        let dFilter = document.getElementById("day-select").value;
+        let wFilter = document.getElementById("week-select").value;
+        let areaFilter = document.getElementById("area-select").value;
+
+
+        if (areaFilter == '') {
+            document.getElementById('main-container').hidden = true
+            document.getElementById('footer').hidden = true
+        } else {
+            document.getElementById('main-container').hidden = false
+            document.getElementById('footer').hidden = false
+        }
+        
+        if (yFilter){
+            if (mFilter){
+                if (dFilter) {
+                    const dFiltered = document.getElementById("day-filtered");
+                    dFiltered.textContent = dFilter +' ';
+                }
+                else{
+                    const mFiltered = document.getElementById("month-filtered");
+                    mFiltered.textContent = mFilter +' ';
+                }
+            }
+            else if(wFilter){
+                const wFiltered = document.getElementById("week-filtered");
+                wFiltered.textContent = 'Semana ' + wFilter +', ';
+            }else{
+                const yFiltered = document.getElementById("year-filtered");
+                yFiltered.textContent = ' ' + yFilter;
+            }
+        }
+
+        filtering(url = 'http://localhost:4000/api/', yFilter, mFilter, dFilter, wFilter,areaFilter)
+
+        
+    }
+
+//==================================================================================================================
+    // Function to hide the loader
+    function hideloader() {
+        document.getElementById('loading').style.display = 'none';
+    }
+
+    function CountData(data,yFilter,mFilter,dFilter,wFilter,key,areaFilter){
+        let Count = [];
+        let totalTickets = 0;
+        let totalTicketsLast = 0;
+
+        
+
+        document.getElementById('summary-day').hidden = true
+        data.body.forEach((item)=>{
+            if (item.Area == areaFilter) {
+                if (yFilter) {
+                    if(wFilter){
+                        if(item.Year == yFilter && item.Week == wFilter){
+                            if((Count.some((val)=>{ return val[key] == item[key] }))){
+                                Count.forEach((cantidad)=>{
+                                    if((cantidad[key] == item[key])){
+                                        cantidad["Cantidad"]++
+                                        totalTickets++
+                                    }
+                                })
+                            }else{
+                                let a = {}
+                                a[key] = item[key]
+                                a["Cantidad"] = 1
+                                Count.push(a);
+                                totalTickets++
+                            }
+                        }
+                    }
+                    else if (mFilter) {
+                        if (dFilter) {
+                            if (item.Year == yFilter && item.Month == mFilter && item.Day == dFilter) {
+                                if((Count.some((val)=>{ return val[key] == item[key] }))){
+                                    Count.forEach((cantidad)=>{
+                                        if((cantidad[key] == item[key])){ 
+                                            cantidad["Cantidad"]++
+                                            totalTickets++
+                                        }
+                                    })
+                                }else{
+                                    let a = {}
+                                    a[key] = item[key]
+                                    a["Cantidad"] = 1
+                                    Count.push(a);
+                                    totalTickets++
+                                }
+                            }
+                            document.getElementById('summary-day').hidden = false
+                            const totalDiario = document.querySelector(".total-diario");
+                            totalDiario.textContent = totalTickets;
+                        } else {
+                            
+                            if (item.Year == yFilter && item.Month == mFilter) {
+                                if((Count.some((val)=>{ return val[key] == item[key] }))){
+                                    Count.forEach((cantidad)=>{
+                                        if((cantidad[key] == item[key])){ 
+                                            cantidad["Cantidad"]++
+                                            totalTickets++
+                                        }
+                                    })
+                                }else{
+                                    let a = {}
+                                    a[key] = item[key]
+                                    a["Cantidad"] = 1
+                                    Count.push(a);
+                                    totalTickets++
+                                }
+                            }
+                        }
+                        
+                    }else{
+                        if (item.Year == yFilter) {
+                            if((Count.some((val)=>{ return val[key] == item[key] }))){
+                                Count.forEach((cantidad)=>{
+                                    
+                                        if((cantidad[key] == item[key])){ 
+                                            cantidad["Cantidad"]++
+                                            totalTickets++
+                                        }
+                                    
+                                })
+                            }else{
+                                let a = {}
+                                a[key] = item[key]
+                                a["Cantidad"] = 1
+                                Count.push(a);
+                                totalTickets++
+                            }
+                        }
+                        if (item.Year == (yFilter-1)) {
+                            if((Count.some((val)=>{ return val[key] == item[key] }))){
+                                Count.forEach((cantidad)=>{
+                                    
+                                        if((cantidad[key] == item[key])){ 
+                                            cantidad["CantidadLast"]++
+                                            totalTicketsLast++
+                                        }
+                                    
+                                })
+                            }else{
+                                let a = {}
+                                a[key] = item[key]
+                                a["CantidadLast"] = 1
+                                Count.push(a);
+                                totalTicketsLast++
+                            }
+                        }
+                        console.log(Count);
+                    }
+                }else{
+                    if((Count.some((val)=>{ return val[key] == item[key] }))){
+                        Count.forEach((cantidad)=>{
+                            if((cantidad[key] == item[key])){ 
+                                cantidad["Cantidad"]++
+                                totalTickets++
+                            }
+                        })
+                    }else{
+                        let a = {}
+                        a[key] = item[key]
+                        a["Cantidad"] = 1
+                        Count.push(a);
+                        totalTickets++
+                    }
+                }
+            }
+
+        })
+
+        let obj = {
+            Count:Count,
+            totalTickets:totalTickets
+        }
+        return obj;
+    }
+
+
+
+    // Function to define innerHTML for HTML table
+    function showType(data,yFilter,mFilter,dFilter,wFilter,areaFilter) {
+
+        let Labels = [];
+        let Quantity = [];
+        let key = 'Tipo'
+        let tab =`<tr>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Porcentaje</th>
+        </tr>`;
+
+        const dataFiltered = CountData(data,yFilter,mFilter,dFilter,wFilter,key,areaFilter)
+        let Count = dataFiltered.Count
+        let totalTickets = dataFiltered.totalTickets
+
+        //=================================UPDATE DATA TO TABLE=========================================
+        for (let r of Count) {
+            tab += `<tr>
+                <td>${r.Tipo} </td>
+                <td>${r.Cantidad}</td>
+                <td>${((r.Cantidad/totalTickets)*100).toFixed(1)}%</td>
+            </tr>`;
+            Labels.push(r.Tipo)
+            Quantity.push(r.Cantidad)
+        }
+        tab+=`<tr>
+                <td><strong>Total</strong></td>
+                <td><strong>${totalTickets}</strong></td>
+                <td><strong>${((totalTickets/totalTickets)*100).toFixed(1)}%</strong></td>
+                
+            </tr>`;
+        document.getElementById("types").innerHTML = tab;
+        //=================================UPDATE DATA TO CHART=========================================== 
+        if (typeChart) {
+            typeChart.destroy();
+            loadChartTypes(Labels, Quantity)
+        }
+        else{
+            loadChartTypes(Labels, Quantity)
+        }
+    }
+
+
+    //========================================cREATE CHART ELEMENT WITH UPDATED DATA==========================================
+    function loadChartTypes(Labels, Quantity){
+        typeChart = new Chart(chartTypes, {
+            type: 'pie',
+            data: {
+                labels: Labels,
+                datasets: [{
+                    label: 'Cantidad',
+                    data:Quantity,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function showIssue(data,yFilter,mFilter,dFilter,wFilter,areaFilter) {
+        let Labels = [];
+        let Quantity = [];
+        let key = 'Problema';
+        let tab =`<tr>
+            <th>Problema</th>
+            <th>Cantidad</th>
+            <th>Porcentaje</th>
+        </tr>`;
+
+        const dataFiltered = CountData(data,yFilter,mFilter,dFilter,wFilter,key,areaFilter)
+        let Count = dataFiltered.Count
+        let totalTickets = dataFiltered.totalTickets
+
+
+        //=================================UPDATE DATA TO TABLE=========================================
+        for (let r of Count) {
+            tab += `<tr>
+                <td>${r.Problema} </td>
+                <td>${r.Cantidad}</td>
+                <td>${((r.Cantidad/totalTickets)*100).toFixed(1)}%</td>
+            </tr>`;
+            Labels.push(r.Problema)
+            Quantity.push(r.Cantidad)
+        }
+        tab+=`<tr>
+                <td><strong>Total</strong></td>
+                <td><strong>${totalTickets}</strong></td>
+                <td><strong>${((totalTickets/totalTickets)*100).toFixed(1)}%</strong></td>
+                
+            </tr>`;
+        document.getElementById("issues").innerHTML = tab;
+        //=================================UPDATE DATA TO CHART=========================================== 
+        if (issueChart) {
+            issueChart.destroy();
+            loadChartIssues(Labels, Quantity)
+        }
+        else{
+            loadChartIssues(Labels, Quantity)
+        }
+    }
+
+    //========================================cREATE CHART ELEMENT WITH UPDATED DATA==========================================
+    function loadChartIssues(Labels, Quantity){
+        issueChart = new Chart(chartIssues, {
+            type: 'pie',
+            data: {
+                labels: Labels,
+                datasets: [{
+                    label: 'Cantidad',
+                    data:Quantity,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+
+    function showPriority(data,yFilter,mFilter,dFilter,wFilter,areaFilter) {
+        
+        let Labels = [];
+        let Quantity = [];
+        let key = 'Prioridad';
+        let tab =`<tr>
+            <th>Prioridad</th>
+            <th>Cantidad</th>
+            <th>Porcentaje</th>
+        </tr>`;
+
+        const dataFiltered = CountData(data,yFilter,mFilter,dFilter,wFilter,key,areaFilter)
+        let Count = dataFiltered.Count
+        let totalTickets = dataFiltered.totalTickets
+        
+        //=================================UPDATE DATA TO TABLE=========================================
+        for (let r of Count) {
+            tab += `<tr>
+                <td>${r.Prioridad} </td>
+                <td>${r.Cantidad}</td>
+                <td>${((r.Cantidad/totalTickets)*100).toFixed(1)}%</td>
+            </tr>`;
+            Labels.push(r.Prioridad)
+            Quantity.push(r.Cantidad)
+        }
+        tab+=`<tr>
+                <td><strong>Total</strong></td>
+                <td><strong>${totalTickets}</strong></td>
+                <td><strong>${((totalTickets/totalTickets)*100).toFixed(1)}%</strong></td>
+                
+            </tr>`;
+        document.getElementById("priorities").innerHTML = tab;
+        //=================================UPDATE DATA TO CHART=========================================== 
+        if (priorityChart) {
+            priorityChart.destroy();
+            loadChartPriorities(Labels, Quantity)
+        }
+        else{
+            loadChartPriorities(Labels, Quantity)
+        }
+    }
+
+    function loadChartPriorities(Labels, Quantity){
+        priorityChart = new Chart(chartPriority, {
+            type: 'pie',
+            data: {
+                labels: Labels,
+                datasets: [{
+                    label: 'Cantidad',
+                    data:Quantity,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function showAssigned(data, yFilter, mFilter, dFilter,wFilter,areaFilter) {
+        let Labels = [];
+        let Quantity = [];
+        let key = 'Asignado';
+        let tab =`<tr>
+            <th>Asignado TI</th>
+            <th>Cantidad</th>
+            <th>Porcentaje</th>
+        </tr>`;
+
+        const dataFiltered = CountData(data,yFilter,mFilter,dFilter,wFilter,key,areaFilter)
+        let Count = dataFiltered.Count
+        let totalTickets = dataFiltered.totalTickets
+
+        //=================================UPDATE DATA TO TABLE=========================================
+        for (let r of Count) {
+            tab += `<tr>
+                <td>${r.Asignado} </td>
+                <td>${r.Cantidad}</td>
+                <td>${((r.Cantidad/totalTickets)*100).toFixed(1)}%</td>
+            </tr>`;
+            Labels.push(r.Asignado)
+            Quantity.push(r.Cantidad)
+        }
+        tab+=`<tr>
+                <td><strong>Total</strong></td>
+                <td><strong>${totalTickets}</strong></td>
+                <td><strong>${((totalTickets/totalTickets)*100).toFixed(1)}%</strong></td>
+                
+            </tr>`;
+        document.getElementById("assigned").innerHTML = tab;
+        //=================================UPDATE DATA TO CHART=========================================== 
+        if (assignedChart) {
+            assignedChart.destroy();
+            loadChartAssigned(Labels, Quantity)
+        }
+        else{
+            loadChartAssigned(Labels, Quantity)
+        }
+    }
+
+    function loadChartAssigned(Labels, Quantity){
+        assignedChart = new Chart(chartAssigned, {
+            type: 'pie',
+            data: {
+                labels: Labels,
+                datasets: [{
+                    label: 'Cantidad',
+                    data: Quantity,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function showHouse(data, yFilter, mFilter, dFilter,wFilter,areaFilter) {
+                
+        let Labels = [];
+        let Quantity = [];
+        let key = 'Casa';
+        let tab =`<tr>
+            <th>Casa</th>
+            <th>Cantidad</th>
+            <th>Porcentaje</th>
+        </tr>`;
+
+        const dataFiltered = CountData(data,yFilter,mFilter,dFilter,wFilter,key,areaFilter)
+        let Count = dataFiltered.Count
+        let totalTickets = dataFiltered.totalTickets
+
+        //=================================UPDATE DATA TO TABLE=========================================
+        for (let r of Count) {
+            tab += `<tr>
+                <td>${r.Casa} </td>
+                <td>${r.Cantidad}</td>
+                <td>${((r.Cantidad/totalTickets)*100).toFixed(1)}%</td>
+            </tr>`;
+            Labels.push(r.Casa)
+            Quantity.push(r.Cantidad)
+        }
+        tab+=`<tr>
+                <td><strong>Total</strong></td>
+                <td><strong>${totalTickets}</strong></td>
+                <td><strong>${((totalTickets/totalTickets)*100).toFixed(1)}%</strong></td>
+                
+            </tr>`;
+        document.getElementById("house").innerHTML = tab;
+        //=================================UPDATE DATA TO CHART=========================================== 
+        if (houseChart) {
+            houseChart.destroy();
+            loadChartHouse(Labels, Quantity)
+        }
+        else{
+            loadChartHouse(Labels, Quantity)
+        }
+    }
+
+    function loadChartHouse(Labels, Quantity){
+        houseChart = new Chart(chartHouse, {
+            type: 'pie',
+            data: {
+                labels: Labels,
+                datasets: [{
+                    label: 'Cantidad',
+                    data: Quantity,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function showGuest(data, yFilter, mFilter, dFilter,wFilter,areaFilter) {
+                
+                let Labels = [];
+                let Quantity = [];
+                let key = 'Huesped';
+                let tab =`<tr>
+                    <th>Huesped</th>
+                    <th>Cantidad</th>
+                    <th>Porcentaje</th>
+                </tr>`;
+        
+                const dataFiltered = CountData(data,yFilter,mFilter,dFilter,wFilter,key,areaFilter)
+                let Count = dataFiltered.Count
+                let totalTickets = dataFiltered.totalTickets
+                
+                //=================================UPDATE DATA TO TABLE=========================================
+                for (let r of Count) {
+                    tab += `<tr>
+                        <td>${r.Huesped} </td>
+                        <td>${r.Cantidad}</td>
+                        <td>${((r.Cantidad/totalTickets)*100).toFixed(1)}%</td>
+                    </tr>`;
+                    Labels.push(r.Huesped)
+                    Quantity.push(r.Cantidad)
+                }
+                tab+=`<tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>${totalTickets}</strong></td>
+                    <td><strong>${((totalTickets/totalTickets)*100).toFixed(1)}%</strong></td>
+                    
+                </tr>`;
+                document.getElementById("guest").innerHTML = tab;
+                //=================================UPDATE DATA TO CHART=========================================== 
+                if (guestChart) {
+                    guestChart.destroy();
+                    loadChartGuest(Labels, Quantity)
+                }
+                else{
+                    loadChartGuest(Labels, Quantity)
+                }
+            }
+        
+            function loadChartGuest(Labels, Quantity){
+                guestChart = new Chart(chartGuest, {
+                    type: 'pie',
+                    data: {
+                        labels: Labels,
+                        datasets: [{
+                            label: 'Cantidad',
+                            data: Quantity,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+    function showYearly(data, yFilter) {
+        let Labels = [];
+        let monthCount = [];
+        let Count = [];
+        let totalTickets = 0;
+        let key = 'Month';
+        let tab =`<tr>
+            <th>Mes</th>
+            <th>Cantidad</th>
+            <th>Porcentaje</th>
+        </tr>`;
+
+        data.body.forEach((item)=>{
+            if (yFilter) {
+                    if (item.Year == yFilter) {
+                        if((Count.some((val)=>{ return val[key] == item[key] }))){
+                            Count.forEach((cantidad)=>{
+                                    if((cantidad[key] == item[key])){ 
+                                        cantidad["Cantidad"]++
+                                        totalTickets++
+                                    }
+                                
+                            })
+                        }else{
+                            let a = {}
+                            a[key] = item[key]
+                            a["Cantidad"] = 1
+                            Count.push(a);
+                            totalTickets++
+                        }
+                    }
+                    
+            }else{
+                if (yearlyChart) {
+            yearlyChart.destroy();  
+        }
+            }
+        })
+
+        sortByMonth(Count);
+        function sortByMonth(Count) {
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        Count.sort(function(a, b){
+            return months.indexOf(a.Month)
+                - months.indexOf(b.Month);
+        });
+        }
+        
+
+        const totalAnual = document.querySelector(".total-anual");
+        totalAnual.textContent = totalTickets;
+
+        //=================================UPDATE DATA TO TABLE=========================================
+        for (let r of Count) {
+            tab += `<tr>
+                <td>${r.Month} </td>
+                <td>${r.Cantidad}</td>
+                <td>${((r.Cantidad/totalTickets)*100).toFixed(1)}%</td>
+            </tr>`;
+            Labels.push(r.Month)
+            monthCount.push(r.Cantidad)
+        }
+        
+        document.getElementById("yearly").innerHTML = tab;
+        //=================================UPDATE DATA TO CHART=========================================== 
+        if (yFilter) {
+            yearlyChart.destroy();
+            loadChartYear(Labels, monthCount)
+        }
+        else{
+            loadChartYear(Labels, monthCount)
+        }
+        if (yFilter) {
+            document.getElementById('summary-year').hidden = false
+        } else {
+            document.getElementById('summary-year').hidden = true
+        }
+    }
+
+    function loadChartYear(Labels, monthCount){
+        yearlyChart = new Chart(chartYearly, {
+            type: 'line',
+            data: {
+                labels: Labels,
+                datasets: [{
+                    label: 'Cantidad',
+                    data: monthCount,
+                    borderColor: 'rgba(119,82,162,1)',
+                    backgroundColor: 'rgba(119,82,162,0.5)',
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                tension:0.25,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function showMonthly(data,yFilter,mFilter) {
+        let Labels = [];
+        let dayCount = [];
+        let Count = [];
+        let totalTickets = 0;
+        let key = 'Day';
+        let tab =`<tr>
+            <th>Dia</th>
+            <th>Cantidad</th>
+            <th>Porcentaje</th>
+        </tr>`;
+
+        data.body.forEach((item)=>{
+            if (yFilter) {
+                if (mFilter) {
+                    if (item.Year == yFilter && item.Month == mFilter) {
+                        if((Count.some((val)=>{ return val[key] == item[key] }))){
+                            Count.forEach((cantidad)=>{
+                                    if((cantidad[key] == item[key])){ 
+                                        cantidad["Cantidad"]++
+                                        totalTickets++
+                                    }
+                                
+                            })
+                        }else{
+                            let a = {}
+                            a[key] = item[key]
+                            a["Cantidad"] = 1
+                            Count.push(a);
+                            totalTickets++
+                        }
+                    }
+                }else{
+                    if (monthlyChart) {
+                    monthlyChart.destroy();  
+                }
+                }
+            }else{
+                if (monthlyChart) {
+                    monthlyChart.destroy();  
+                }
+            }
+        })
+
+        const totalMensual = document.querySelector(".total-mensual");
+        totalMensual.textContent = totalTickets;
+
+        Count.sort(function(a, b){ return a.Day - b.Day});
+        
+        //=================================UPDATE DATA TO TABLE=========================================
+        for (let r of Count) {
+            tab += `<tr>
+                <td>${r.Day} </td>
+                <td>${r.Cantidad}</td>
+                <td>${((r.Cantidad/totalTickets)*100).toFixed(1)}%</td>
+            </tr>`;
+            Labels.push('Día ' + r.Day)
+            dayCount.push(r.Cantidad)
+        }
+        
+        document.getElementById("monthly").innerHTML = tab;
+        //=================================UPDATE DATA TO CHART=========================================== 
+        if (yFilter) {
+            monthlyChart.destroy();
+            loadChartMonth(Labels, dayCount)
+        }
+        else{
+            loadChartMonth(Labels, dayCount)
+        }
+        if (yFilter && mFilter) {
+            document.getElementById('summary-month').hidden = false
+            document.getElementById('summary-week').hidden = true
+
+        } else {
+            document.getElementById('summary-month').hidden = true
+        }
+    }
+
+    function loadChartMonth(Labels, monthCount){
+        monthlyChart = new Chart(chartMonthly, {
+            type: 'line',
+            data: {
+                labels: Labels,
+                datasets: [{
+                    label: 'Cantidad',
+                    data: monthCount,
+                    borderColor: 'rgba(205,68,151,1)',
+                    backgroundColor: 'rgba(205,68,151,0.5)',
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                tension:0.25,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+
+    function showWeekly(data,yFilter,wFilter) {
+        let Labels = [];
+        let weekCount = [];
+        let Count = [];
+        let totalTickets = 0;
+        let key = 'Day';
+        let tab =`<tr>
+            <th>Dia</th>
+            <th>Cantidad</th>
+            <th>Porcentaje</th>
+        </tr>`;
+
+        data.body.forEach((item)=>{
+            if (yFilter) {
+                if (wFilter) {
+                    if (item.Year == yFilter && item.Week == wFilter) {
+                        if((Count.some((val)=>{ return val[key] == item[key] }))){
+                            Count.forEach((cantidad)=>{
+                                    if((cantidad[key] == item[key])){ 
+                                        cantidad["Cantidad"]++
+                                        totalTickets++
+                                    }
+                                
+                            })
+                        }else{
+                            let a = {}
+                            a[key] = item[key]
+                            a["Cantidad"] = 1
+                            Count.push(a);
+                            totalTickets++
+                        }
+                    }
+                }else{
+                    if (weeklyChart) {
+                    weeklyChart.destroy();  
+                }
+                }
+            }else{
+                if (weeklyChart) {
+                    weeklyChart.destroy();  
+                }
+            }
+        })
+
+        const totalSemanal = document.querySelector(".total-semanal");
+        totalSemanal.textContent = totalTickets;
+
+        Count.sort(function(a, b){ return a.Day - b.Day});
+        
+        //=================================UPDATE DATA TO TABLE=========================================
+        for (let r of Count) {
+            tab += `<tr>
+                <td>${r.Day} </td>
+                <td>${r.Cantidad}</td>
+                <td>${((r.Cantidad/totalTickets)*100).toFixed(1)}%</td>
+            </tr>`;
+            Labels.push('Dia ' + r.Day)
+            weekCount.push(r.Cantidad)
+        }
+        
+        document.getElementById("weekly").innerHTML = tab;
+        //=================================UPDATE DATA TO CHART=========================================== 
+        if (yFilter) {
+            weeklyChart.destroy();
+            loadChartWeek(Labels, weekCount)
+        }
+        else{
+            loadChartWeek(Labels, weekCount)
+        }
+        if (yFilter && wFilter) {
+            document.getElementById('summary-week').hidden = false
+            document.getElementById('summary-month').hidden = true
+
+        } else {
+            document.getElementById('summary-week').hidden = true
+        }
+    }
+
+    function loadChartWeek(Labels, weekCount){
+        weeklyChart = new Chart(chartWeekly, {
+            type: 'line',
+            data: {
+                labels: Labels,
+                datasets: [{
+                    label: 'Cantidad',
+                    data: weekCount,
+                    borderColor: 'rgba(205,68,151,1)',
+                    backgroundColor: 'rgba(205,68,151,0.5)',
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                tension:0.25,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+
+    function showDaily(data,yFilter,wFilter,dFilter) {
+        let Labels = [];
+        let dayCount = [];
+        let totalTickets = 0;
+
+        data.body.forEach((item)=>{
+            if (yFilter) {
+                if (mFilter) {
+                    if (dFilter) {
+                        if (item.Year == yFilter && item.Month == mFilter && item.Day == dFilter) {
+                            totalTickets++
+                        }
+                    }
+                }
+            }
+        })
+
+        const totalDiario = document.querySelector(".total-diario");
+        totalDiario.textContent = totalTickets;
+        
+    
+    }
+
+</script>
+</html>
